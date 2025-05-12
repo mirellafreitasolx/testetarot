@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTarot } from '../context/TarotContext';
 import TarotCard from './TarotCard';
 
 const TarotDeck: React.FC = () => {
   const { cards, selectCard } = useTarot();
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const handleCardSelect = (card: any, index: number) => {
+    if (isTransitioning) return;
+    
+    setSelectedIndex(index);
+    setIsTransitioning(true);
+
+    // Aguarda a animação de centralização antes de revelar a carta
+    setTimeout(() => {
+      selectCard(card);
+    }, 1000);
+  };
 
   return (
     <div className="tarot-deck-container">
@@ -13,9 +27,11 @@ const TarotDeck: React.FC = () => {
           <TarotCard 
             key={card.id} 
             card={card} 
-            index={index} 
+            index={index}
+            isSelected={selectedIndex === index}
+            isTransitioning={isTransitioning}
             total={cards.length}
-            onSelect={() => selectCard(card)}
+            onSelect={() => handleCardSelect(card, index)}
           />
         ))}
       </div>

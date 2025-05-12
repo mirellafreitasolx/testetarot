@@ -9,10 +9,19 @@ interface TarotCardProps {
   };
   index: number;
   total: number;
+  isSelected: boolean;
+  isTransitioning: boolean;
   onSelect: () => void;
 }
 
-const TarotCard: React.FC<TarotCardProps> = ({ card, index, total, onSelect }) => {
+const TarotCard: React.FC<TarotCardProps> = ({ 
+  card, 
+  index, 
+  total, 
+  isSelected,
+  isTransitioning,
+  onSelect 
+}) => {
   const [isHovered, setIsHovered] = useState(false);
   
   const calculatePosition = () => {
@@ -35,12 +44,22 @@ const TarotCard: React.FC<TarotCardProps> = ({ card, index, total, onSelect }) =
     // Calcular a rotação da carta
     const rotation = (cardAngle * 180) / Math.PI;
 
+    if (isSelected) {
+      return {
+        transform: `translate(0, 0) rotate(0deg)`,
+        transition: 'all 1s ease-in-out',
+        zIndex: 1000,
+      };
+    }
+
     // Aplicar transformação base e adicionar hover se necessário
     const baseTransform = `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
-    const hoverTransform = isHovered ? ' translateY(-20px)' : '';
+    const hoverTransform = isHovered && !isTransitioning ? ' translateY(-20px)' : '';
     
     return {
       transform: baseTransform + hoverTransform,
+      opacity: isTransitioning ? 0 : 1,
+      transition: 'all 0.5s ease-in-out',
       zIndex: isHovered ? 100 : index,
     };
   };

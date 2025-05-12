@@ -10,17 +10,23 @@ const StarryBackground: React.FC = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Configurar o canvas para ocupar toda a tela
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const dpr = window.devicePixelRatio || 1;
+      const displayWidth = window.innerWidth;
+      const displayHeight = window.innerHeight;
+      
+      canvas.width = displayWidth * dpr;
+      canvas.height = displayHeight * dpr;
+      
+      canvas.style.width = `${displayWidth}px`;
+      canvas.style.height = `${displayHeight}px`;
+      
+      ctx.scale(dpr, dpr);
     };
 
-    // Ajustar o canvas quando a janela for redimensionada
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    // Classe para representar uma estrela
     class Star {
       x: number;
       y: number;
@@ -33,14 +39,13 @@ const StarryBackground: React.FC = () => {
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 1.5;
+        this.size = Math.random() * 1.2;
         this.opacity = Math.random();
-        this.speed = 0.005 + Math.random() * 0.01;
-        this.maxOpacity = 0.5 + Math.random() * 0.5;
+        this.speed = 0.005 + Math.random() * 0.008;
+        this.maxOpacity = 0.4 + Math.random() * 0.4;
         this.direction = Math.random() > 0.5 ? 1 : -1;
       }
 
-      // Atualizar a opacidade da estrela
       update() {
         this.opacity += this.speed * this.direction;
         
@@ -53,7 +58,6 @@ const StarryBackground: React.FC = () => {
         }
       }
 
-      // Desenhar a estrela no canvas
       draw() {
         ctx!.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
         ctx!.beginPath();
@@ -62,35 +66,28 @@ const StarryBackground: React.FC = () => {
       }
     }
 
-    // Criar estrelas
-    const stars: Star[] = [];
-    const starCount = Math.floor((canvas.width * canvas.height) / 2000);
-    
-    for (let i = 0; i < starCount; i++) {
-      stars.push(new Star());
-    }
+    const starCount = Math.floor((canvas.width * canvas.height) / 4000);
+    const stars: Star[] = Array.from({ length: starCount }, () => new Star());
+    let animationFrameId: number;
 
-    // Animação das estrelas
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Desenhar cada estrela
       stars.forEach(star => {
         star.update();
         star.draw();
       });
-      
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
     };
 
     animate();
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
+      cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
   return <canvas ref={canvasRef} className="starry-background" />;
 };
 
-export default StarryBackground;
+export default React.memo(StarryBackground);
