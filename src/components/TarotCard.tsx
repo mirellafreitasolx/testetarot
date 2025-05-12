@@ -25,8 +25,10 @@ const TarotCard: React.FC<TarotCardProps> = ({
   const [isHovered, setIsHovered] = useState(false);
   
   const calculatePosition = () => {
+    const isMobile = window.innerWidth <= 768;
+    
     // Ângulo total do arco (em graus)
-    const arcAngle = window.innerWidth <= 768 ? 45 : 60; // Reduzido para mobile
+    const arcAngle = isMobile ? 35 : 60;
     
     // Converter para radianos
     const angleInRadians = (arcAngle * Math.PI) / 180;
@@ -34,12 +36,15 @@ const TarotCard: React.FC<TarotCardProps> = ({
     // Calcular o ângulo para esta carta
     const cardAngle = (index / (total - 1) - 0.5) * angleInRadians;
     
-    // Raio do arco - menor para mobile
-    const radius = window.innerWidth <= 768 ? 300 : 600;
+    // Raio do arco - ajustado para mobile
+    const radius = isMobile ? 380 : 600;
+    
+    // Ajuste vertical para mobile
+    const verticalOffset = isMobile ? 140 : 0;
     
     // Calcular posições X e Y usando funções trigonométricas
     const x = Math.sin(cardAngle) * radius;
-    const y = (1 - Math.cos(cardAngle)) * (radius / 3);
+    const y = (1 - Math.cos(cardAngle)) * (radius / 3) + verticalOffset;
     
     // Calcular a rotação da carta
     const rotation = (cardAngle * 180) / Math.PI;
