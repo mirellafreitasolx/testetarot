@@ -1,0 +1,362 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-background: #0A0E29;
+  --color-primary: #5C2A9D;
+  --color-secondary: #FFD700;
+  --color-accent: #DDA0DD;
+  --color-text: #F0F0F0;
+  --color-text-secondary: #D6D6D6;
+  --card-width: 140px;
+  --card-height: 240px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--color-text);
+  overflow-x: hidden;
+  background-color: var(--color-background);
+}
+
+.layout {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Starry Background */
+.starry-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+}
+
+/* Home Page */
+.home-page {
+  text-align: center;
+  max-width: 90%;
+  width: 600px;
+  padding: 2rem;
+}
+
+.home-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeIn 1.2s ease-out;
+}
+
+.title {
+  font-family: 'Cinzel', serif;
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  color: var(--color-secondary);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: var(--color-text-secondary);
+}
+
+.icon-wrapper {
+  margin-bottom: 2rem;
+}
+
+.moon-star-icon {
+  color: var(--color-secondary);
+  animation: pulse 3s infinite;
+}
+
+.start-button {
+  background-color: var(--color-primary);
+  color: var(--color-text);
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  padding: 1rem 2rem;
+  border: 2px solid var(--color-secondary);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(92, 42, 157, 0.6);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.start-button::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0)
+  );
+  transform: rotate(45deg);
+  animation: shimmer 6s infinite;
+  z-index: -1;
+}
+
+.start-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(92, 42, 157, 0.8);
+}
+
+.instruction {
+  font-size: 1.1rem;
+  max-width: 80%;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+/* Tarot Deck */
+.tarot-deck-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.deck-title {
+  font-family: 'Cinzel', serif;
+  font-size: 2rem;
+  color: var(--color-secondary);
+  margin-bottom: 2rem;
+  text-align: center;
+  animation: fadeIn 1s ease;
+}
+
+.tarot-deck {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+}
+
+.tarot-card-wrapper {
+  position: absolute;
+  transform-origin: center bottom;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+  will-change: transform;
+}
+
+.tarot-card {
+  width: var(--card-width);
+  height: var(--card-height);
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Revealed Card */
+.revealed-card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  perspective: 1000px;
+}
+
+.revealed-card {
+  width: calc(var(--card-width) * 1.5);
+  height: calc(var(--card-height) * 1.5);
+  transform-style: preserve-3d;
+  transition: transform 1.2s;
+  margin-bottom: 2rem;
+}
+
+.instruction-text {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin: 1rem 0;
+  text-align: center;
+  font-style: italic;
+}
+
+.revealed-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+.card-info {
+  text-align: center;
+  margin-top: 1rem;
+  animation: fadeIn 1s ease-in 0.5s forwards;
+  opacity: 0;
+}
+
+.card-name {
+  font-family: 'Cinzel', serif;
+  font-size: 2rem;
+  color: var(--color-secondary);
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+.new-reading-button {
+  font-family: 'Cinzel', serif;
+  background-color: var(--color-primary);
+  color: var(--color-text);
+  padding: 0.8rem 1.5rem;
+  border: 2px solid var(--color-secondary);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.new-reading-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(92, 42, 157, 0.6);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) rotate(45deg);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.5rem;
+  }
+  
+  .subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .start-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .instruction {
+    font-size: 1rem;
+  }
+  
+  .deck-title {
+    font-size: 1.5rem;
+  }
+  
+  :root {
+    --card-width: 100px;
+    --card-height: 170px;
+  }
+
+  .revealed-card {
+    width: calc(var(--card-width) * 1.8);
+    height: calc(var(--card-height) * 1.8);
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 2rem;
+  }
+  
+  :root {
+    --card-width: 80px;
+    --card-height: 140px;
+  }
+}
