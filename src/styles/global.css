@@ -260,14 +260,14 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .card-name {
   font-family: 'Cinzel', serif;
   font-size: clamp(1.5rem, 4vw, 2rem);
   color: var(--color-secondary);
-  margin-bottom: 1rem;
+  margin-bottom: 0;
   text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
 }
 
@@ -285,7 +285,6 @@ body {
   border: 2px solid var(--whatsapp-light);
   text-align: center;
   line-height: 1.4;
-  order: -1;
 }
 
 .whatsapp-button:hover {
@@ -340,6 +339,5 @@ body {
 
   .whatsapp-button {
     white-space: pre-line;
-    content: "Clique aqui para\nvoltar para a conversa";
   }
 }
