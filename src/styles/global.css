@@ -11,6 +11,7 @@
   --color-text-secondary: #D6D6D6;
   --card-width: 140px;
   --card-height: 240px;
+  --whatsapp-green: #25D366;
 }
 
 @media (max-width: 768px) {
@@ -265,12 +266,23 @@ body {
   text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
 }
 
-.instruction-text {
-  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-  color: var(--color-text-secondary);
-  margin: 0.8rem 0;
-  text-align: center;
-  font-style: italic;
+.whatsapp-button {
+  display: inline-block;
+  background-color: var(--whatsapp-green);
+  color: white;
+  padding: 0.8em 1.6em;
+  border-radius: 50px;
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  margin: 1rem 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
+}
+
+.whatsapp-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
 }
 
 .new-reading-button {
@@ -284,6 +296,7 @@ body {
   transition: transform 0.3s ease;
   font-size: clamp(0.9rem, 2.5vw, 1rem);
   touch-action: manipulation;
+  margin-top: 1rem;
 }
 
 .new-reading-button:hover {

@@ -8,12 +8,10 @@ const RevealedCard: React.FC = () => {
 
   useEffect(() => {
     if (selectedCard) {
-      // Inicia a animação de flip após um pequeno delay
       const flipTimer = setTimeout(() => {
         setIsFlipped(true);
       }, 500);
 
-      // Marca como totalmente revelada após a animação de flip
       const revealTimer = setTimeout(() => {
         setIsFullyRevealed(true);
       }, 1500);
@@ -29,11 +27,15 @@ const RevealedCard: React.FC = () => {
     setIsFlipped(false);
     setIsFullyRevealed(false);
     
-    // Pequeno delay antes de resetar e iniciar nova consulta
     setTimeout(() => {
       resetConsultation();
       startConsultation();
     }, 500);
+  };
+
+  const getWhatsAppLink = (cardName: string) => {
+    const encodedName = encodeURIComponent(cardName);
+    return `https://wa.me/5511914693564?text=Carta%20escolhida%3A%20${encodedName}`;
   };
 
   if (!selectedCard) return null;
@@ -62,7 +64,14 @@ const RevealedCard: React.FC = () => {
       {isFullyRevealed && (
         <div className="card-info">
           <h2 className="card-name">{selectedCard.name}</h2>
-          <p className="instruction-text">Volte para a conversa e informe o nome da carta escolhida</p>
+          <a 
+            href={getWhatsAppLink(selectedCard.name)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="whatsapp-button"
+          >
+            Clique aqui para voltar para a conversa
+          </a>
           <button 
             className="new-reading-button"
             onClick={handleNewReading}
@@ -75,4 +84,4 @@ const RevealedCard: React.FC = () => {
   );
 };
 
-export default RevealedCard
+export default RevealedCard;
