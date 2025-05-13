@@ -70,7 +70,7 @@ const RevealedCard: React.FC = () => {
             rel="noopener noreferrer"
             className="whatsapp-button"
           >
-            Clique aqui para voltar para a conversa
+            {window.innerWidth <= 768 ? "Clique aqui para\nvoltar para a conversa" : "Clique aqui para voltar para a conversa"}
           </a>
           <button 
             className="new-reading-button"
